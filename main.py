@@ -20,17 +20,24 @@ except pygame.error as e:
 SPRITE_WIDTH = 50
 SPRITE_HEIGHT = 50
 
-# Function to extract a sprite from the sprite sheet
-def get_sprite(sheet, x, y, width, height):
+# Function to extract and scale a sprite from the sprite sheet
+def get_sprite(sheet, x, y, width, height, scale_factor=1):
     sprite = pygame.Surface((width, height), pygame.SRCALPHA)
     sprite.blit(sheet, (0, 0), (x, y, width, height))
+    if scale_factor != 1:
+        new_width = int(width * scale_factor)
+        new_height = int(height * scale_factor)
+        sprite = pygame.transform.scale(sprite, (new_width, new_height))
     return sprite
 
-# Extract individual sprites (assuming they are arranged in a grid on the sheet)
-sprite_down = get_sprite(sprite_sheet, 0, 0, SPRITE_WIDTH, SPRITE_HEIGHT)  # Default sprite
-sprite_left = get_sprite(sprite_sheet, SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT)
-sprite_right = get_sprite(sprite_sheet, 2 * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT)
-sprite_up = get_sprite(sprite_sheet, 3 * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT)
+# Scale factor (e.g., 1.5 for 150% size)
+scale_factor = 1.5
+
+# Extract and scale individual sprites
+sprite_down = get_sprite(sprite_sheet, 0, 0, SPRITE_WIDTH, SPRITE_HEIGHT, scale_factor)
+sprite_left = get_sprite(sprite_sheet, SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT, scale_factor)
+sprite_right = get_sprite(sprite_sheet, 2 * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT, scale_factor)
+sprite_up = get_sprite(sprite_sheet, 3 * SPRITE_WIDTH, 0, SPRITE_WIDTH, SPRITE_HEIGHT, scale_factor)
 
 # Set up the initial position and default sprite
 player_position = [50, 50]
@@ -68,3 +75,4 @@ while gameRunning:
     pygame.display.flip()
 
 pygame.quit()
+
