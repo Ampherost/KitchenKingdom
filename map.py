@@ -55,7 +55,7 @@ def load_tile_images():
     """Loads and returns a dictionary of tile images."""
     try:
         tile_images = {
-            DIRT: pygame.image.load("assets/images/map/tiles/Tilled_Dirt.png").convert_alpha(),
+            DIRT: pygame.image.load("assets/images/map/tiles/oakTile.bmp").convert_alpha(),
             WALLS: pygame.image.load("assets/images/map/walls/Wooden_House_Walls_Tilset.png").convert_alpha(),
         }
     except pygame.error as e:

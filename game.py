@@ -14,9 +14,9 @@ def run_game():
     # Load sprite sheet and individual sprites
     sprite_sheet = load_sprite_sheet("assets/images/mainCharacter/walking/character.png")
     sprite_down = get_sprite(sprite_sheet, 0, 0, 50, 50, 1.5)
-    sprite_left = get_sprite(sprite_sheet, 50, 0, 50, 50, 1.5)
-    sprite_right = get_sprite(sprite_sheet, 100, 0, 50, 50, 1.5)
-    sprite_up = get_sprite(sprite_sheet, 150, 0, 50, 50, 1.5)
+    sprite_left = get_sprite(sprite_sheet, 0, 100, 50, 50, 1.5)
+    sprite_right = get_sprite(sprite_sheet, 0, 150, 50, 50, 1.5)
+    sprite_up = get_sprite(sprite_sheet, 0, 50, 50, 50, 1.5)
 
     # Create the player
     player = Player(sprite_down, sprite_left, sprite_right, sprite_up, [50, 50])
