@@ -3,6 +3,7 @@ import pygame
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT
 from player import Player
 from sprites import load_sprite_sheet, get_sprite
+from map import create_tile_map  # Correct import from map.py
 
 def run_game():
     pygame.init()
@@ -20,6 +21,8 @@ def run_game():
     # Create the player
     player = Player(sprite_down, sprite_left, sprite_right, sprite_up, [50, 50])
 
+    tile_map = create_tile_map()
+
     game_running = True
     while game_running:
         for event in pygame.event.get():
@@ -30,6 +33,8 @@ def run_game():
         player.move(keys)
 
         screen.fill((0, 0, 0))
+        tile_map.draw(screen)
+
         player.draw(screen)
         pygame.display.flip()
 
