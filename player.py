@@ -1,31 +1,45 @@
 # player.py
 import pygame
 from settings import PLAYER_SPEED
+from sprites import load_animation_frames
 
 class Player:
-    def __init__(self, sprite_down, sprite_left, sprite_right, sprite_up, position):
-        self.sprites = {
-            'down': sprite_down,
-            'left': sprite_left,
-            'right': sprite_right,
-            'up': sprite_up
+    def __init__(self, frames_down, frames_left, frames_right, frames_up, position):
+        self.animations = {
+            'down': frames_down,
+            'left': frames_left,
+            'right': frames_right,
+            'up': frames_up
         }
-        self.current_sprite = self.sprites['down']
-        self.position = position
+        
+        self.current_animation = 'down'
+        self.current_frame = 0
+        self.animation_speed = 200  # milliseconds between frames
+        self.last_update = pygame.time.get_ticks()
+        self.image = self.animations[self.current_animation][self.current_frame]
+        self.rect = self.image.get_rect(topleft=position)
 
     def move(self, keys):
-        if keys[pygame.K_a]:  # Left
-            self.position[0] -= PLAYER_SPEED
-            self.current_sprite = self.sprites['left']
-        elif keys[pygame.K_d]:  # Right
-            self.position[0] += PLAYER_SPEED
-            self.current_sprite = self.sprites['right']
-        elif keys[pygame.K_w]:  # Up
-            self.position[1] -= PLAYER_SPEED
-            self.current_sprite = self.sprites['up']
-        elif keys[pygame.K_s]:  # Down
-            self.position[1] += PLAYER_SPEED
-            self.current_sprite = self.sprites['down']
+        if keys[pygame.K_a]:
+            self.current_animation = 'left'
+            self.rect.x -= 1  # Move left
+        elif keys[pygame.K_d]:
+            self.current_animation = 'right'
+            self.rect.x += 1  # Move right
+        elif keys[pygame.K_w]:
+            self.current_animation = 'up'
+            self.rect.y -= 1  # Move up
+        elif keys[pygame.K_s]:
+            self.current_animation = 'down'
+            self.rect.y += 1  # Move down
 
-    def draw(self, screen):
-        screen.blit(self.current_sprite, self.position)
+    def update(self):
+        now = pygame.time.get_ticks()
+        if now - self.last_update > self.animation_speed:
+            self.last_update = now
+            self.current_frame = (self.current_frame + 1) % len(self.animations[self.current_animation])
+            self.image = self.animations[self.current_animation][self.current_frame]
+
+    def draw(self, surface):
+        surface.blit(self.image, self.rect.topleft)
+

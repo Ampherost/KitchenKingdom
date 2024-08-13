@@ -1,9 +1,8 @@
-# game.py
 import pygame
 from settings import SCREEN_WIDTH, SCREEN_HEIGHT
 from player import Player
-from sprites import load_sprite_sheet, get_sprite
-from map import create_tile_map  # Correct import from map.py
+from sprites import load_sprite_sheet, load_animation_frames
+from map import create_tile_map
 
 def run_game():
     pygame.init()
@@ -11,15 +10,17 @@ def run_game():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Kitchen Kingdom")
 
-    # Load sprite sheet and individual sprites
+    # Load the sprite sheet
     sprite_sheet = load_sprite_sheet("assets/images/mainCharacter/walking/character.png")
-    sprite_down = get_sprite(sprite_sheet, 0, 0, 50, 50, 1.5)
-    sprite_left = get_sprite(sprite_sheet, 0, 100, 50, 50, 1.5)
-    sprite_right = get_sprite(sprite_sheet, 0, 150, 50, 50, 1.5)
-    sprite_up = get_sprite(sprite_sheet, 0, 50, 50, 50, 1.5)
 
-    # Create the player
-    player = Player(sprite_down, sprite_left, sprite_right, sprite_up, [50, 50])
+    # Load animation frames for each direction
+    frames_down = load_animation_frames(sprite_sheet, 0, 0, 48, 48, 4)   # Assuming 4 frames for walking down
+    frames_left = load_animation_frames(sprite_sheet, 0, 96, 48, 48, 4)  # 4 frames for walking left
+    frames_right = load_animation_frames(sprite_sheet, 0, 144, 48, 48, 4) # 4 frames for walking right
+    frames_up = load_animation_frames(sprite_sheet, 0, 48, 48, 48, 4)   # 4 frames for walking up
+
+    # Create the player with the animation frames
+    player = Player(frames_down, frames_left, frames_right, frames_up, [50, 50])
 
     tile_map = create_tile_map()
 
@@ -32,10 +33,14 @@ def run_game():
         keys = pygame.key.get_pressed()
         player.move(keys)
 
+        # Update player animation
+        player.update()
+
+        # Render everything
         screen.fill((0, 0, 0))
         tile_map.draw(screen)
-
         player.draw(screen)
         pygame.display.flip()
 
     pygame.quit()
+
