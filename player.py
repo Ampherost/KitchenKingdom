@@ -14,7 +14,7 @@ class Player:
         
         self.current_animation = 'down'
         self.current_frame = 0
-        self.animation_speed = 200  # milliseconds between frames
+        self.animation_speed = 350  # milliseconds between frames
         self.last_update = pygame.time.get_ticks()
         self.image = self.animations[self.current_animation][self.current_frame]
         self.rect = self.image.get_rect(topleft=position)

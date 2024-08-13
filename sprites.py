@@ -10,6 +10,7 @@ def load_sprite_sheet(path):
         print(f"Failed to load sprite sheet: {e}")
         raise SystemExit(e)
 
+
 def get_sprite(sheet, x, y, width, height, scale_factor=1):
     sprite = pygame.Surface((width, height), pygame.SRCALPHA)
     sprite.blit(sheet, (0, 0), (x, y, width, height))
@@ -19,15 +20,20 @@ def get_sprite(sheet, x, y, width, height, scale_factor=1):
         sprite = pygame.transform.scale(sprite, (new_width, new_height))
     return sprite
 
-def load_animation_frames(sheet, start_x, start_y, width, height, num_frames):
-    """Extracts multiple frames from a sprite sheet."""
+
+def load_animation_frames(sheet, start_x, start_y, width, height, num_frames, scale_factor=1):
     frames = []
     for i in range(num_frames):
-        # Calculate the x position of each frame
-        x = start_x + i * width
-        y = start_y
         # Extract the frame from the sprite sheet
-        frame = sheet.subsurface(pygame.Rect(x, y, width, height))
+        frame = sheet.subsurface(pygame.Rect(start_x + i * width, start_y, width, height))
+        
+        # Scale the frame
+        if scale_factor != 1:
+            scaled_width = int(width * scale_factor)
+            scaled_height = int(height * scale_factor)
+            frame = pygame.transform.scale(frame, (scaled_width, scaled_height))
+        
         frames.append(frame)
     return frames
+
 

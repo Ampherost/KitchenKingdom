@@ -14,10 +14,10 @@ def run_game():
     sprite_sheet = load_sprite_sheet("assets/images/mainCharacter/walking/character.png")
 
     # Load animation frames for each direction
-    frames_down = load_animation_frames(sprite_sheet, 0, 0, 48, 48, 4)   # Assuming 4 frames for walking down
-    frames_left = load_animation_frames(sprite_sheet, 0, 96, 48, 48, 4)  # 4 frames for walking left
-    frames_right = load_animation_frames(sprite_sheet, 0, 144, 48, 48, 4) # 4 frames for walking right
-    frames_up = load_animation_frames(sprite_sheet, 0, 48, 48, 48, 4)   # 4 frames for walking up
+    frames_down = load_animation_frames(sprite_sheet, 0, 0, 48, 48, 4, 1.5)   # Assuming 4 frames for walking down
+    frames_left = load_animation_frames(sprite_sheet, 0, 96, 48, 48, 4, 1.5)  # 4 frames for walking left
+    frames_right = load_animation_frames(sprite_sheet, 0, 144, 48, 48, 4, 1.5) # 4 frames for walking right
+    frames_up = load_animation_frames(sprite_sheet, 0, 48, 48, 48, 4, 1.5)   # 4 frames for walking up
 
     # Create the player with the animation frames
     player = Player(frames_down, frames_left, frames_right, frames_up, [50, 50])
